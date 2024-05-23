@@ -1,26 +1,23 @@
+import 'dart:async';
+
+import 'package:flutter/widgets.dart';
 import 'package:sqflite/sqflite.dart';
 import 'package:path/path.dart';
 
-Database? _database;
-List WholeDataList = [];
+class CatDB {
+  final String breed;
+  final String temperament;
+  final String origin;
+  final String expectedAge;
+  final String photo;
 
-class LocalDatabase {
-  Future get database async {
-    if (_database != null) return _database;
-    _database = await _initializedDB('Local.db');
-    return _database;
-  }
+  const CatDB({
+    required this.breed,
+    required this.temperament,
+    required this.origin,
+    required this.expectedAge,
+    required this.photo,
+  });
 
-  Future _initializedDB(String filepath) async {
-    final dbpath = await getDatabasesPath();
-    final path = join(dbpath, filepath);
-    return await openDatabase(path, version: 1, onCreate: _createDB);
-  }
-
-  Future _createDB(Database db, int version) async {
-    await db.execute('''
-CREATE TABLE Localdata(id INTEGER PRIMARY KEY,
-DummyData JSON NOT NULL)
-''');
-  }
+  WidgetsFlutterBinding.ensureInitialized();
 }
