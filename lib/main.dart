@@ -3,6 +3,7 @@ import 'package:mobile_anwendungen/api_controller.dart';
 import 'package:path/path.dart';
 import 'package:sqflite/sqflite.dart';
 
+import 'database/db.dart';
 import 'json_parser.dart';
 
 void main() async {
@@ -17,6 +18,16 @@ void main() async {
     },
     version: 1,
   );
+
+  Future<void> insertCat(CatDB cat) async {
+    final db = await database;
+
+    await db.insert(
+      'cats',
+      cat.toMap(),
+      conflictAlgorithm: ConflictAlgorithm.replace,
+    );
+  }
 
   runApp(const MyApp());
 }

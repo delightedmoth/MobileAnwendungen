@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:flutter/widgets.dart';
 import 'package:sqflite/sqflite.dart';
 import 'package:path/path.dart';
+import 'package:mobile_anwendungen/main.dart';
 
 class CatDB {
   final String breed;
@@ -19,5 +20,28 @@ class CatDB {
     required this.photo,
   });
 
-  WidgetsFlutterBinding.ensureInitialized();
+  Map<String, Object?> toMap() {
+    return {
+      'breed': breed,
+      'temperament': temperament,
+      'origin': origin,
+      'expectedAge': expectedAge,
+      'photo': photo,
+    };
+  }
+
+  @override
+  String toString() {
+    return 'Cat{breed: $breed, temperament: $temperament, origin: $origin, expectedAge: $expectedAge, photo: $photo}';
+  }
+}
+
+Future<void> insertCat(CatDB cat) async {
+  final db = await database;
+
+  await db.insert(
+    'cats',
+    cat.toMap(),
+    conflictAlgorith: ConflictAlgorithm.replace,
+  );
 }
