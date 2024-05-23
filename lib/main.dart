@@ -44,7 +44,7 @@ class _MainPageState extends State<MainPage> {
                   itemCount: data?.length,
                   itemBuilder: (context, index) {
                     final catData = data?[index];
-                    return Text(catData!.id);
+                    return Text(catData!.breeds[0].name);
                   },
                 );
               } else {
