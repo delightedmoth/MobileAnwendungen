@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:mobile_anwendungen/api_controller.dart';
 import 'package:sqflite/sqflite.dart';
+
+import 'json_parser.dart';
 
 void main() {
   runApp(const MyApp());
@@ -14,21 +17,39 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'Cat App',
       theme: ThemeData(
-
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
-        useMaterial3: true,
+        primarySwatch: Colors.indigo,
+        visualDensity: VisualDensity.adaptivePlatformDensity,
       ),
-      home: MyHomePage(),
+      home: MainPage(),
     );
   }
 }
 
-class MyHomePage extends StatelessWidget {
+class MainPage extends StatefulWidget {
+  @override
+  _MainPageState createState() => _MainPageState();
+}
+
+class _MainPageState extends State<MainPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text('Random Cat App'),),
-
-    );
+        appBar: AppBar(title: const Text("Random Cat App")),
+        body: FutureBuilder<List<Cat>>(
+            future: ApiProvider().getCats(),
+            builder: (context, snapshot) {
+              final data = snapshot.data;
+              if (snapshot.hasData) {
+                return ListView.builder(
+                  itemCount: data?.length,
+                  itemBuilder: (context, index) {
+                    final catData = data?[index];
+                    return Text(catData!.id);
+                  },
+                );
+              } else {
+                return const CircularProgressIndicator();
+              }
+            }));
   }
 }
