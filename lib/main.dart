@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:mobile_anwendungen/api_controller.dart';
+import 'package:mobile_anwendungen/screens/cat_detail.dart';
+import 'package:mobile_anwendungen/screens/cat_list.dart';
 import 'package:path/path.dart';
 import 'package:sqflite/sqflite.dart';
 
@@ -42,38 +44,8 @@ class MyApp extends StatelessWidget {
       title: 'Cat App',
       theme: ThemeData(
         primarySwatch: Colors.indigo,
-        visualDensity: VisualDensity.adaptivePlatformDensity,
       ),
-      home: MainPage(),
+      home: CatList(),
     );
-  }
-}
-
-class MainPage extends StatefulWidget {
-  @override
-  _MainPageState createState() => _MainPageState();
-}
-
-class _MainPageState extends State<MainPage> {
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-        appBar: AppBar(title: const Text("Random Cat App")),
-        body: FutureBuilder<List<Cat>>(
-            future: ApiProvider().getCats(),
-            builder: (context, snapshot) {
-              final data = snapshot.data;
-              if (snapshot.hasData) {
-                return ListView.builder(
-                  itemCount: data?.length,
-                  itemBuilder: (context, index) {
-                    final catData = data?[index];
-                    return Text(catData!.breeds[0].name);
-                  },
-                );
-              } else {
-                return const CircularProgressIndicator();
-              }
-            }));
   }
 }

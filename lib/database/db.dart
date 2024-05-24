@@ -6,6 +6,7 @@ import 'package:path/path.dart';
 import 'package:mobile_anwendungen/main.dart';
 
 class CatDB {
+  final String? name;
   final String breed;
   final String temperament;
   final String origin;
@@ -13,6 +14,7 @@ class CatDB {
   final String photo;
 
   const CatDB({
+    this.name,
     required this.breed,
     required this.temperament,
     required this.origin,
@@ -22,6 +24,7 @@ class CatDB {
 
   Map<String, Object?> toMap() {
     return {
+      'name': name,
       'breed': breed,
       'temperament': temperament,
       'origin': origin,
@@ -32,16 +35,6 @@ class CatDB {
 
   @override
   String toString() {
-    return 'Cat{breed: $breed, temperament: $temperament, origin: $origin, expectedAge: $expectedAge, photo: $photo}';
+    return 'Cat{name: $name, breed: $breed, temperament: $temperament, origin: $origin, expectedAge: $expectedAge, photo: $photo}';
   }
-}
-
-Future<void> insertCat(CatDB cat) async {
-  final db = await database;
-
-  await db.insert(
-    'cats',
-    cat.toMap(),
-    conflictAlgorith: ConflictAlgorithm.replace,
-  );
 }
