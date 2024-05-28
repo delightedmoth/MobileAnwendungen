@@ -11,7 +11,7 @@ class CatDB {
   final String temperament;
   final String origin;
   final String expectedAge;
-  final String photo;
+  final String? photo;
 
   const CatDB({
     this.name,
@@ -19,7 +19,7 @@ class CatDB {
     required this.temperament,
     required this.origin,
     required this.expectedAge,
-    required this.photo,
+    this.photo,
   });
 
   Map<String, Object?> toMap() {

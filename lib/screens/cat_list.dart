@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:mobile_anwendungen/screens/cat_detail.dart';
+import 'package:mobile_anwendungen/screens/nav_bar.dart';
 
 int count = 4;
 
@@ -14,6 +15,7 @@ class CatListState extends State<CatList> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      drawer: NavBar(),
       appBar: AppBar(
         title: const Text(
           'Random Cat App',

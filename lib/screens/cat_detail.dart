@@ -51,7 +51,7 @@ class CatDetailState extends State<CatDetail> {
                   debugPrint('Name field was edited');
                 },
                 decoration: InputDecoration(
-                    labelText: 'Breed',
+                    labelText: 'Name',
                     labelStyle: textStyle,
                     border: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(5.0))),
