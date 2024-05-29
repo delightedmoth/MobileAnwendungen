@@ -1,0 +1,92 @@
+import 'cat_model.dart';
+import 'dart:async';
+import 'dart:io';
+import 'package:path/path.dart';
+import 'package:path_provider/path_provider.dart';
+import 'package:sqflite/sqflite.dart';
+
+class DatabaseHelper {
+  static late DatabaseHelper _databaseHelper;
+  static late Database _database;
+
+  String catTable = 'cat_table';
+  String colId = 'id';
+  String colName = 'name';
+  String colBreed = 'breed';
+  String colTemperament = 'temperament';
+  String colOrigin = 'origin';
+  String colAge = 'expectedAge';
+  String colPhotoURL = 'photoURL';
+
+  DatabaseHelper._createInstance();
+
+  factory DatabaseHelper() {
+    if (_databaseHelper == null) {
+      _databaseHelper = DatabaseHelper._createInstance();
+    }
+
+    return _databaseHelper;
+  }
+
+  Future<Database> get database async {
+    if (_database == null) {
+      _database = await initializeDatabase();
+    }
+
+    return _database;
+  }
+
+  Future<Database> initializeDatabase() async {
+    Directory directory = await getApplicationDocumentsDirectory();
+    String path = directory.path + 'cat.db';
+
+    var catDatabase = await openDatabase(path, version: 1, onCreate: _createDb);
+
+    return catDatabase;
+  }
+
+  void _createDb(Database db, int version) async {
+    await db.execute(
+        'CREATE TABLE $catTable($colId INTEGER PRIMARY KEY AUTOINCREMENT, $colName TEXT, $colBreed TEXT, $colTemperament TEXT, $colOrigin TEXT, $colAge TEXT, $colPhotoURL TEXT )');
+  }
+
+  Future<List<Map<String, dynamic>>> getCatMapList() async {
+    Database db = await this.database;
+
+    var result = await db.query(catTable, orderBy: '$colBreed DESC');
+
+    return result;
+  }
+
+  Future<int> insertCat(CatDB cat) async {
+    Database db = await this.database;
+
+    var result = await db.insert(catTable, cat.toMap());
+
+    return result;
+  }
+
+  Future<int> updateCat(CatDB cat) async {
+    Database db = await this.database;
+
+    var results = await db.update(catTable, cat.toMap(),
+        where: '$colId = ?', whereArgs: [cat.id]);
+
+    return results;
+  }
+
+  Future<int> deleteCat(int id) async {
+    Database db = await this.database;
+
+    int result = await db.rawDelete('DELETE FROM $catTable WHERE $colId = $id');
+    return result;
+  }
+
+  Future<int?> getCount() async {
+    Database db = await this.database;
+    List<Map<String, dynamic>> x =
+        await db.rawQuery('SELECT COUNT(*) from $catTable');
+    int? result = Sqflite.firstIntValue(x);
+    return result;
+  }
+}
