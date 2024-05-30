@@ -1,6 +1,10 @@
+import 'dart:async';
 import 'package:flutter/material.dart';
+import 'package:mobile_anwendungen/database/cat_model.dart';
+import 'package:mobile_anwendungen/database/database_helper.dart';
 import 'package:mobile_anwendungen/screens/cat_detail.dart';
 import 'package:mobile_anwendungen/screens/nav_bar.dart';
+import 'package:sqflite/sqflite.dart';
 
 int count = 4;
 
@@ -12,8 +16,14 @@ class CatList extends StatefulWidget {
 }
 
 class CatListState extends State<CatList> {
+  DatabaseHelper databaseHelper = DatabaseHelper.getInstance();
+  List<CatDB> catList = <CatDB>[];
+  int count = 0;
+
   @override
   Widget build(BuildContext context) {
+    updateListView();
+
     return Scaffold(
       drawer: NavBar(),
       appBar: AppBar(
@@ -28,7 +38,15 @@ class CatListState extends State<CatList> {
       body: getCatListView(),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
-          navigateToDetail('Add Cat');
+          navigateToDetail(
+              CatDB(
+                  name: ' ',
+                  breed: ' ',
+                  temperament: ' ',
+                  origin: ' ',
+                  expectedAge: ' ',
+                  photoURL: 'https://cdn2.thecatapi.com/images/8D--jCd21.jpg'),
+              'Add Cat');
         },
         tooltip: 'Add Cat',
         child: const Icon(Icons.add),
@@ -43,24 +61,30 @@ class CatListState extends State<CatList> {
       itemCount: count,
       itemBuilder: (BuildContext context, int position) {
         return Card(
-          color: Colors.lightGreen,
+          color: Color.fromARGB(255, 248, 246, 255),
           elevation: 2.0,
           child: ListTile(
             leading: CircleAvatar(
               backgroundColor: Colors.amber,
+              backgroundImage: NetworkImage(this.catList[position].photoURL),
             ),
             title: Text(
-              'Dummy Title',
+              catList[position].breed,
               style: titleStyle,
             ),
-            subtitle: Text('Dummy Subtitle'),
-            trailing: const Icon(
-              Icons.delete,
-              color: Colors.grey,
+            subtitle: Text(catList[position].origin),
+            trailing: GestureDetector(
+              child: const Icon(
+                Icons.delete,
+                color: Colors.grey,
+              ),
+              onTap: () {
+                _delete(context, catList[position]);
+              },
             ),
             onTap: () {
               debugPrint('ListTile tapped');
-              navigateToDetail('View/Edit Cat Details');
+              navigateToDetail(this.catList[position], 'View/Edit Cat Details');
             },
           ),
         );
@@ -68,9 +92,38 @@ class CatListState extends State<CatList> {
     );
   }
 
-  void navigateToDetail(String title) {
+  void _delete(
+    BuildContext context,
+    CatDB cat,
+  ) async {
+    int? result = await databaseHelper.deleteCat(cat.id);
+    if (result != 0) {
+      _showSnackBar(context, 'Cat Deleted Successfully');
+      updateListView();
+    }
+  }
+
+  void _showSnackBar(BuildContext context, String message) {
+    final snackBar = SnackBar(content: Text(message));
+    ScaffoldMessenger.of(context).showSnackBar(snackBar);
+  }
+
+  void navigateToDetail(CatDB cat, String title) {
     Navigator.push(context, MaterialPageRoute(builder: (context) {
-      return CatDetail(title);
+      return CatDetail(cat, title);
     }));
+  }
+
+  void updateListView() {
+    final Future<Database> dbFuture = databaseHelper.initializeDatabase();
+    dbFuture.then((database) {
+      Future<List<CatDB>> catListFuture = databaseHelper.getCatList();
+      catListFuture.then((catList) {
+        setState(() {
+          this.catList = catList;
+          this.count = catList.length;
+        });
+      });
+    });
   }
 }

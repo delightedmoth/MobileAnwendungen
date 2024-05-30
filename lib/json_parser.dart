@@ -57,7 +57,7 @@ class Breed {
   String lifeSpan;
   int indoor;
   int? lap;
-  String altNames;
+  String? altNames;
   int adaptability;
   int affectionLevel;
   int childFriendly;
@@ -98,7 +98,7 @@ class Breed {
     required this.lifeSpan,
     required this.indoor,
     this.lap,
-    required this.altNames,
+    this.altNames,
     required this.adaptability,
     required this.affectionLevel,
     required this.childFriendly,

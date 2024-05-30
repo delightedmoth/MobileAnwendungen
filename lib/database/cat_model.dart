@@ -6,22 +6,22 @@ import 'package:path/path.dart';
 import 'package:mobile_anwendungen/main.dart';
 
 class CatDB {
-  final int id;
-  final String? name;
-  final String breed;
-  final String temperament;
-  final String origin;
-  final String expectedAge;
-  final String? photoURL;
+  late int? id;
+  late String name;
+  late String breed;
+  late String temperament;
+  late String origin;
+  late String expectedAge;
+  late String photoURL;
 
-  const CatDB({
-    required this.id,
-    this.name,
+  CatDB({
+    this.id,
+    required this.name,
     required this.breed,
     required this.temperament,
     required this.origin,
     required this.expectedAge,
-    this.photoURL,
+    required this.photoURL,
   });
 
   Map<String, Object?> toMap() {
@@ -31,12 +31,22 @@ class CatDB {
       'temperament': temperament,
       'origin': origin,
       'expectedAge': expectedAge,
-      'photo': photoURL,
+      'photoURL': photoURL,
     };
   }
 
   @override
   String toString() {
     return 'Cat{name: $name, breed: $breed, temperament: $temperament, origin: $origin, expectedAge: $expectedAge, photo: $photoURL}';
+  }
+
+  CatDB.fromMapObject(Map<String, dynamic> map) {
+    id = map['id'];
+    name = map['name'];
+    breed = map['breed'];
+    temperament = map['temperament'];
+    origin = map['origin'];
+    expectedAge = map['expectedAge'];
+    photoURL = map['photoURL'];
   }
 }
