@@ -49,7 +49,7 @@ class DatabaseHelper {
   Future<List<Map<String, dynamic>>> getCatMapList() async {
     Database? db = await database;
 
-    var result = await db!.query(catTable, orderBy: '$colBreed DESC');
+    var result = await db!.query(catTable, orderBy: '$colBreed ASC');
 
     return result;
   }
@@ -98,5 +98,11 @@ class DatabaseHelper {
     }
 
     return catList;
+  }
+
+  Future<int?> deleteData() async {
+    final db = await database;
+    int? result = await db?.delete(catTable);
+    return result;
   }
 }

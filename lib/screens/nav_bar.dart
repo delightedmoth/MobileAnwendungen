@@ -61,12 +61,6 @@ class NavBar extends StatelessWidget {
   }
 
   void _deleteAllCats() async {
-    int? counter = await helper.getCount();
-    print('$counter');
-
-    for (int i = 0; i < counter!; i++) {
-      await helper.deleteCat(i);
-      print('deleted');
-    }
+    await helper.deleteData();
   }
 }
