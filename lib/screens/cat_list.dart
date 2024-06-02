@@ -61,12 +61,12 @@ class CatListState extends State<CatList> {
       itemCount: count,
       itemBuilder: (BuildContext context, int position) {
         return Card(
-          color: Color.fromARGB(255, 248, 246, 255),
+          color: const Color.fromARGB(255, 248, 246, 255),
           elevation: 2.0,
           child: ListTile(
             leading: CircleAvatar(
               backgroundColor: Colors.amber,
-              backgroundImage: NetworkImage(this.catList[position].photoURL),
+              backgroundImage: NetworkImage(catList[position].photoURL),
             ),
             title: Text(
               catList[position].breed,
@@ -84,7 +84,7 @@ class CatListState extends State<CatList> {
             ),
             onTap: () {
               debugPrint('ListTile tapped');
-              navigateToDetail(this.catList[position], 'View/Edit Cat Details');
+              navigateToDetail(catList[position], 'View/Edit Cat Details');
             },
           ),
         );
@@ -121,7 +121,7 @@ class CatListState extends State<CatList> {
       catListFuture.then((catList) {
         setState(() {
           this.catList = catList;
-          this.count = catList.length;
+          count = catList.length;
         });
       });
     });
