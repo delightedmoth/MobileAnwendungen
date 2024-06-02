@@ -1,10 +1,3 @@
-import 'dart:async';
-
-import 'package:flutter/widgets.dart';
-import 'package:sqflite/sqflite.dart';
-import 'package:path/path.dart';
-import 'package:mobile_anwendungen/main.dart';
-
 class CatDB {
   late int? id;
   late String name;

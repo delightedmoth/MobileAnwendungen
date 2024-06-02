@@ -1,9 +1,6 @@
-import 'dart:async';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:mobile_anwendungen/database/cat_model.dart';
 import 'package:mobile_anwendungen/database/database_helper.dart';
-import 'package:sqflite/sqflite.dart';
 
 class CatDetail extends StatefulWidget {
   String appBarTitle;

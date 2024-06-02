@@ -1,12 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:mobile_anwendungen/api_controller.dart';
-import 'package:mobile_anwendungen/screens/cat_detail.dart';
 import 'package:mobile_anwendungen/screens/cat_list.dart';
-import 'package:path/path.dart';
-import 'package:sqflite/sqflite.dart';
-
-import 'database/cat_model.dart';
-import 'json_parser.dart';
 
 void main() async {
   runApp(const MyApp());

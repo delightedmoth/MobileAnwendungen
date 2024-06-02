@@ -1,7 +1,6 @@
 import 'cat_model.dart';
 import 'dart:async';
 import 'dart:io';
-import 'package:path/path.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:sqflite/sqflite.dart';
 
@@ -55,7 +54,7 @@ class DatabaseHelper {
   }
 
   Future<int> insertCat(CatDB cat) async {
-    Database? db = await this.database;
+    Database? db = await database;
 
     var result = await db!.insert(catTable, cat.toMap());
 
@@ -63,7 +62,7 @@ class DatabaseHelper {
   }
 
   Future<int> updateCat(CatDB cat) async {
-    Database? db = await this.database;
+    Database? db = await database;
 
     var results = await db!.update(catTable, cat.toMap(),
         where: '$colId = ?', whereArgs: [cat.id]);
@@ -72,7 +71,7 @@ class DatabaseHelper {
   }
 
   Future<int> deleteCat(int? id) async {
-    Database? db = await this.database;
+    Database? db = await database;
 
     int result =
         await db!.rawDelete('DELETE FROM $catTable WHERE $colId = $id');
@@ -80,7 +79,7 @@ class DatabaseHelper {
   }
 
   Future<int?> getCount() async {
-    Database? db = await this.database;
+    Database? db = await database;
     List<Map<String, dynamic>> x =
         await db!.rawQuery('SELECT COUNT(*) from $catTable');
     int? result = Sqflite.firstIntValue(x);

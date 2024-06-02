@@ -3,7 +3,6 @@ import 'package:mobile_anwendungen/api_controller.dart';
 import 'package:mobile_anwendungen/database/cat_model.dart';
 import 'package:mobile_anwendungen/database/database_helper.dart';
 import 'package:mobile_anwendungen/json_parser.dart';
-import 'package:mobile_anwendungen/screens/cat_list.dart';
 
 class NavBar extends StatelessWidget {
   DatabaseHelper helper = DatabaseHelper.getInstance();
@@ -18,7 +17,7 @@ class NavBar extends StatelessWidget {
       child: ListView(
         padding: EdgeInsets.zero,
         children: [
-          DrawerHeader(
+          const DrawerHeader(
             decoration: BoxDecoration(
               image: DecorationImage(
                   image: AssetImage("lib/assets/NavBarCat.png"),
@@ -27,13 +26,13 @@ class NavBar extends StatelessWidget {
             child: Text('Settings'),
           ),
           ListTile(
-            title: Text('Fill Database'),
+            title: const Text('Fill Database'),
             onTap: () {
               _addOnlineCats();
             },
           ),
           ListTile(
-            title: Text('Dump Database'),
+            title: const Text('Dump Database'),
             onTap: () {
               _deleteAllCats();
             },
