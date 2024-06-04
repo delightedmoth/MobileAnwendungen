@@ -100,6 +100,15 @@ class DatabaseHelper {
     return catList;
   }
 
+  Future<CatDB> getCatfromID({String? uniqueId}) async {
+    final db = await database;
+    CatDB scannedCat;
+    List<Map<String, dynamic>> list =
+        await db!.rawQuery('SELECT * FROM $catTable WHERE uuid = "$uniqueId"');
+    scannedCat = CatDB.fromMapObject(list.first);
+    return scannedCat;
+  }
+
   Future<int?> deleteData() async {
     final db = await database;
     int? result = await db?.delete(catTable);
