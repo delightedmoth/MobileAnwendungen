@@ -2,9 +2,11 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:mobile_anwendungen/database/cat_model.dart';
 import 'package:mobile_anwendungen/database/database_helper.dart';
+import 'package:mobile_anwendungen/screens/camera.dart';
 import 'package:mobile_anwendungen/screens/cat_detail.dart';
 import 'package:mobile_anwendungen/screens/nav_bar.dart';
 import 'package:sqflite/sqflite.dart';
+import 'package:uuid/uuid.dart';
 
 int count = 4;
 
@@ -19,6 +21,7 @@ class CatListState extends State<CatList> {
   DatabaseHelper databaseHelper = DatabaseHelper.getInstance();
   List<CatDB> catList = <CatDB>[];
   int count = 0;
+  var uuid = Uuid();
 
   @override
   Widget build(BuildContext context) {
@@ -27,12 +30,21 @@ class CatListState extends State<CatList> {
     return Scaffold(
       drawer: NavBar(),
       appBar: AppBar(
+        iconTheme: const IconThemeData(color: Colors.white),
+        actions: [
+          IconButton(
+              onPressed: () {
+                navigateToQRScanner('QR Code Scanner');
+              },
+              icon: const Icon(Icons.qr_code_scanner))
+        ],
         title: const Text(
           'Random Cat App',
           style: TextStyle(
             color: Colors.white,
           ),
         ),
+        centerTitle: true,
         backgroundColor: Colors.indigo,
       ),
       body: getCatListView(),
@@ -45,7 +57,8 @@ class CatListState extends State<CatList> {
                   temperament: ' ',
                   origin: ' ',
                   expectedAge: ' ',
-                  photoURL: 'https://cdn2.thecatapi.com/images/8D--jCd21.jpg'),
+                  photoURL: 'https://cdn2.thecatapi.com/images/8D--jCd21.jpg',
+                  uuid: uuid.v4().toString()),
               'Add Cat');
         },
         tooltip: 'Add Cat',
@@ -111,6 +124,12 @@ class CatListState extends State<CatList> {
   void navigateToDetail(CatDB cat, String title) {
     Navigator.push(context, MaterialPageRoute(builder: (context) {
       return CatDetail(cat, title);
+    }));
+  }
+
+  void navigateToQRScanner(String title) {
+    Navigator.push(context, MaterialPageRoute(builder: (context) {
+      return QRCodeScanner(title);
     }));
   }
 

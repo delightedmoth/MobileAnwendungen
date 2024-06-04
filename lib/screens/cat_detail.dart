@@ -40,6 +40,7 @@ class CatDetailState extends State<CatDetail> {
 
     return Scaffold(
       appBar: AppBar(
+        iconTheme: const IconThemeData(color: Colors.white),
         title: Text(
           appBarTitle,
           style: const TextStyle(
@@ -62,7 +63,6 @@ class CatDetailState extends State<CatDetail> {
                 controller: nameController,
                 style: textStyle,
                 onChanged: (value) {
-                  debugPrint('Name field was edited');
                   updateName();
                 },
                 decoration: InputDecoration(
@@ -78,7 +78,6 @@ class CatDetailState extends State<CatDetail> {
                 controller: breedController,
                 style: textStyle,
                 onChanged: (value) {
-                  debugPrint('Text field was edited');
                   updateBreed();
                 },
                 decoration: InputDecoration(
@@ -94,7 +93,6 @@ class CatDetailState extends State<CatDetail> {
                 controller: temperamentController,
                 style: textStyle,
                 onChanged: (value) {
-                  debugPrint('Text field was edited');
                   updateTemperament();
                 },
                 decoration: InputDecoration(
@@ -110,7 +108,6 @@ class CatDetailState extends State<CatDetail> {
                 controller: originController,
                 style: textStyle,
                 onChanged: (value) {
-                  debugPrint('Text field was edited');
                   updateOrigin();
                 },
                 decoration: InputDecoration(
@@ -126,7 +123,6 @@ class CatDetailState extends State<CatDetail> {
                 controller: expectedAgeController,
                 style: textStyle,
                 onChanged: (value) {
-                  debugPrint('Text field was edited');
                   updateExpectedAge();
                 },
                 decoration: InputDecoration(
@@ -135,6 +131,10 @@ class CatDetailState extends State<CatDetail> {
                     border: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(5.0))),
               ),
+            ),
+            Padding(
+              padding: const EdgeInsets.only(top: 15.0, bottom: 15.0),
+              child: Text(cat.uuid),
             ),
             Padding(
               padding: const EdgeInsets.only(top: 15.0, bottom: 15.0),

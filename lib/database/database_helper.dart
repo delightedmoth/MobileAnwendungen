@@ -18,6 +18,7 @@ class DatabaseHelper {
   String colOrigin = 'origin';
   String colAge = 'expectedAge';
   String colPhotoURL = 'photoURL';
+  String colUuid = 'uuid';
 
   factory DatabaseHelper.getInstance() {
     return _databaseHelper;
@@ -42,7 +43,7 @@ class DatabaseHelper {
 
   void _createDb(Database db, int version) async {
     await db.execute(
-        'CREATE TABLE $catTable($colId INTEGER PRIMARY KEY AUTOINCREMENT, $colName TEXT, $colBreed TEXT, $colTemperament TEXT, $colOrigin TEXT, $colAge TEXT, $colPhotoURL TEXT )');
+        'CREATE TABLE $catTable($colId INTEGER PRIMARY KEY AUTOINCREMENT, $colName TEXT, $colBreed TEXT, $colTemperament TEXT, $colOrigin TEXT, $colAge TEXT, $colPhotoURL TEXT, $colUuid TEXT )');
   }
 
   Future<List<Map<String, dynamic>>> getCatMapList() async {
