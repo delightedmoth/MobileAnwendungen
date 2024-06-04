@@ -1,3 +1,4 @@
+import 'package:barcode_widget/barcode_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:mobile_anwendungen/database/cat_model.dart';
 import 'package:mobile_anwendungen/database/database_helper.dart';
@@ -132,9 +133,13 @@ class CatDetailState extends State<CatDetail> {
                         borderRadius: BorderRadius.circular(5.0))),
               ),
             ),
+            //Padding(
+            //   padding: const EdgeInsets.only(top: 15.0, bottom: 15.0),
+            //   child: Text(cat.uuid),
+            // ),
             Padding(
               padding: const EdgeInsets.only(top: 15.0, bottom: 15.0),
-              child: Text(cat.uuid),
+              child: BarcodeWidget(data: cat.uuid, barcode: Barcode.qrCode()),
             ),
             Padding(
               padding: const EdgeInsets.only(top: 15.0, bottom: 15.0),

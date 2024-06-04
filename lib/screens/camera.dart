@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:mobile_scanner/mobile_scanner.dart';
 
 class QRCodeScanner extends StatefulWidget {
   String appBarTitle;
@@ -23,8 +24,10 @@ class QRCodeScannerState extends State<QRCodeScanner> {
           appBarTitle,
           style: const TextStyle(color: Colors.white),
         ),
+        centerTitle: true,
         backgroundColor: Colors.indigo,
       ),
+      body: MobileScanner(onDetect: (capture) {}),
     );
   }
 }
