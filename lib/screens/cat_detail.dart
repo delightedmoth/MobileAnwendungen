@@ -8,9 +8,7 @@ class CatDetail extends StatefulWidget {
   final CatDB cat;
   CatDetail(this.cat, this.appBarTitle);
   @override
-  State<StatefulWidget> createState() {
-    return CatDetailState(cat, appBarTitle);
-  }
+  State<StatefulWidget> createState() => CatDetailState(cat, appBarTitle);
 }
 
 class CatDetailState extends State<CatDetail> {
@@ -192,7 +190,7 @@ class CatDetailState extends State<CatDetail> {
   }
 
   void _save() async {
-    Navigator.pop(context);
+    Navigator.of(context).popUntil((predicate) => predicate.isFirst);
 
     int result;
 
@@ -210,7 +208,7 @@ class CatDetailState extends State<CatDetail> {
   }
 
   void _delete() async {
-    Navigator.pop(context);
+    Navigator.of(context).popUntil((predicate) => predicate.isFirst);
 
     if (cat.id == null) {
       _showAlertDialog('Status', 'Cats not in Database cant be deleted');

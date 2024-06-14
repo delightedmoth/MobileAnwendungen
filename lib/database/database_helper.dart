@@ -105,8 +105,20 @@ class DatabaseHelper {
     CatDB scannedCat;
     List<Map<String, dynamic>> list =
         await db!.rawQuery('SELECT * FROM $catTable WHERE uuid = "$uniqueId"');
-    scannedCat = CatDB.fromMapObject(list.first);
-    return scannedCat;
+    if (list.isEmpty == true) {
+      scannedCat = CatDB(
+          name: 'name',
+          breed: 'breed',
+          temperament: 'temperament',
+          origin: 'origin',
+          expectedAge: 'expectedAge',
+          photoURL: 'ERROR',
+          uuid: 'uuid');
+      return scannedCat;
+    } else {
+      scannedCat = CatDB.fromMapObject(list.first);
+      return scannedCat;
+    }
   }
 
   Future<int?> deleteData() async {

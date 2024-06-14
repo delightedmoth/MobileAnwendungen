@@ -12,9 +12,9 @@ int count = 4;
 
 class CatList extends StatefulWidget {
   @override
-  State<StatefulWidget> createState() {
+  State<StatefulWidget> createState() =>
     return CatListState();
-  }
+  
 }
 
 class CatListState extends State<CatList> {
